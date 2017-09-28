@@ -24,10 +24,8 @@ export default class Game extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    function secretNum() {
       const magicNum = Math.floor(Math.random() * 100) + 1;
       this.setState({number: magicNum});
-    }
   }
 
   handleShow() {
@@ -53,12 +51,12 @@ export default class Game extends React.Component {
       for (let i = 0; this.state.guessArray.length; i++) {
         if (num === this.state.guessArray[i]) {
           alert('You already guessed that number! Please choose another.');
-        } else {
-          this.setState({
-            guessArray: [...this.state.guessArray, num]
-          });
         }
       }
+      this.setState({
+        guessArray: [...this.state.guessArray, num],
+        turn: this.state.turn + 1
+      });
     }
   }
 
