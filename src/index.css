@@ -308,3 +308,7 @@ ul.guessBox li {
   margin: 0.2em;
   color: #fff;
 }
+
+.hidden {
+  display: none;
+}

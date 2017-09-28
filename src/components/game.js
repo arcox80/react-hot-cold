@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from './modal.js';
 import Form from './form.js';
 import Guesses from './guesses.js';
+import Start from './start.js';
+import Winner from './winner.js';
 import '../index.css';
 
 export default class Game extends React.Component {
@@ -9,13 +11,23 @@ export default class Game extends React.Component {
     super(props);
     this.state = {
       showModal: false,
-      guess: ''
+      guess: '',
+      guessArray: [],
+      turn: 0,
+      number: '',
+      won: false
     };
     
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    function secretNum() {
+      const magicNum = Math.floor(Math.random() * 100) + 1;
+      this.setState({number: magicNum});
+    }
   }
 
   handleShow() {
@@ -32,7 +44,22 @@ export default class Game extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({guess: event.target.value});
+    let num = this.state.guess;
+    if (num === this.state.number) {
+      this.setState({won: true});
+    } else if (num < 1 || num > 100) {
+      alert('Please choose a number between 1 and 100');
+    } else {
+      for (let i = 0; this.state.guessArray.length; i++) {
+        if (num === this.state.guessArray[i]) {
+          alert('You already guessed that number! Please choose another.');
+        } else {
+          this.setState({
+            guessArray: [...this.state.guessArray, num]
+          });
+        }
+      }
+    }
   }
 
   render() {
@@ -72,10 +99,11 @@ export default class Game extends React.Component {
           <h1 className="title">HOT or COLD</h1>
         </header>
         <section className="game">
-          <h2 id="feedback">Make your Guess!</h2>
+          { this.state.won ? <Winner /> : <Start /> }
           <Form 
-            onSubmit={this.handleSubmit}
             value={this.state.guess}
+            onChange={this.handleChange}
+            onSubmit={this.handleSubmit}
           />
           <Guesses />
         </section>
