@@ -105,7 +105,12 @@ export default class Game extends React.Component {
             onChange={this.handleChange}
             onSubmit={this.handleSubmit}
           />
-          <Guesses />
+          <div>
+            <p>Guess #<span id="count">{this.state.turn}</span>!</p>
+            <ul id="guessList" className="guessBox clearfix">
+              {this.state.guessArray.length > 0 ? <Guesses /> : null}
+            </ul>
+          </div>
         </section>
       </div>
     );
