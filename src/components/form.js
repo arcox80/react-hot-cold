@@ -10,8 +10,8 @@ export default function Form(props) {
           maxLength="3"
           autoComplete="off"
           placeholder="Enter Your Guess"
+          onChange={props.onChange}
           required
-          value={props.value}
         />
         <input type="submit"
           name="submit"

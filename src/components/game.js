@@ -1,15 +1,21 @@
 import React from 'react';
-import Board from './board.js';
 import Modal from './modal.js';
+import Form from './form.js';
+import Guesses from './guesses.js';
 import '../index.css';
 
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {showModal: false};
+    this.state = {
+      showModal: false,
+      guess: ''
+    };
     
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleShow() {
@@ -18,6 +24,15 @@ export default class Game extends React.Component {
   
   handleHide() {
     this.setState({showModal: false});
+  }
+
+  handleChange(event) {
+    this.setState({guess: event.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({guess: event.target.value});
   }
 
   render() {
@@ -41,21 +56,30 @@ export default class Game extends React.Component {
       </Modal>
     ) : null;
     return (
-      <header>
-        <nav className="game-nav">
-          <ul>
-            <li>
-              <button className="instructions" onClick={this.handleShow}>Instructions</button>
-            </li>
-            <li>
-              <button className="new-game">New Game</button>
-            </li>
-          </ul>
-        </nav>
-        {modal}
-        <h1 className="title">HOT or COLD</h1>
-        <Board />
-      </header>
+      <div>
+        <header>
+          <nav className="game-nav">
+            <ul>
+              <li>
+                <button className="instructions" onClick={this.handleShow}>Instructions</button>
+              </li>
+              <li>
+                <button className="new-game">New Game</button>
+              </li>
+            </ul>
+          </nav>
+          {modal}
+          <h1 className="title">HOT or COLD</h1>
+        </header>
+        <section className="game">
+          <h2 id="feedback">Make your Guess!</h2>
+          <Form 
+            onSubmit={this.handleSubmit}
+            value={this.state.guess}
+          />
+          <Guesses />
+        </section>
+      </div>
     );
   }
 }
