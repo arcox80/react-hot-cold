@@ -100,7 +100,9 @@ export default class Game extends React.Component {
                 <button className="instructions" onClick={this.handleShow}>Instructions</button>
               </li>
               <li>
-                <button className="new-game">New Game</button>
+                <form>
+                  <button className="new-game" formAction="/index.html">New Game</button>
+                </form>
               </li>
             </ul>
           </nav>
