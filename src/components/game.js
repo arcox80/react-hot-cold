@@ -42,21 +42,23 @@ export default class Game extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let num = this.state.guess;
-    if (num === this.state.number) {
+    let numGuess = Number.parseInt(this.state.guess, 10);
+    let newGuessArray = [...this.state.guessArray];
+    if (numGuess === this.state.number) {
       this.setState({won: true});
-    } else if (num < 1 || num > 100) {
+    } else if (numGuess < 1 || numGuess > 100) {
       alert('Please choose a number between 1 and 100');
     } else {
-      for (let i = 0; this.state.guessArray.length; i++) {
-        if (num === this.state.guessArray[i]) {
+      for (let i = 0; newGuessArray.length; i++) {
+        if (numGuess === newGuessArray[i]) {
           alert('You already guessed that number! Please choose another.');
         }
       }
       this.setState({
-        guessArray: [...this.state.guessArray, num],
+        guessArray: [...this.state.guessArray, numGuess],
         turn: this.state.turn + 1
       });
+      console.log(this.state);
     }
   }
 
@@ -80,6 +82,7 @@ export default class Game extends React.Component {
         </div>
       </Modal>
     ) : null;
+    const guesses = (this.state.guessArray.length > 0) ? (<Guesses value={this.state.guessArray[(this.state.turn - 1)]} />) : null;
     return (
       <div>
         <header>
@@ -106,7 +109,7 @@ export default class Game extends React.Component {
           <div>
             <p>Guess #<span id="count">{this.state.turn}</span>!</p>
             <ul id="guessList" className="guessBox clearfix">
-              {this.state.guessArray.length > 0 ? <Guesses /> : null}
+              {guesses}
             </ul>
           </div>
         </section>
