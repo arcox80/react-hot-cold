@@ -15,7 +15,8 @@ export default class Game extends React.Component {
       guessArray: [],
       turn: 0,
       number: '',
-      won: false
+      won: false,
+      hotOrCold: ''
     };
     
     this.handleShow = this.handleShow.bind(this);
@@ -53,6 +54,15 @@ export default class Game extends React.Component {
         if (numGuess === newGuessArray[i]) {
           alert('You already guessed that number! Please choose another.');
         }
+      }
+      if (Math.abs(this.state.number - numGuess) < 10) {
+        this.setState({hotOrCold: 'HOT'});
+      } else if (Math.abs(this.state.number - numGuess) < 20 && Math.abs(this.state.number - numGuess) > 9){
+        this.setState({hotOrCold: 'WARM'});
+      } else if(Math.abs(this.state.number - numGuess) < 30 && Math.abs(this.state.number - numGuess) > 19){
+        this.setState({hotOrCold: 'COOL'});
+      } else {
+        this.setState({hotOrCold: 'COLD'});
       }
       this.setState({
         guessArray: [...this.state.guessArray, numGuess],
