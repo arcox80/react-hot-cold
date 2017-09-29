@@ -2,8 +2,6 @@ import React from 'react';
 import Modal from './modal.js';
 import Form from './form.js';
 import Guesses from './guesses.js';
-import Start from './start.js';
-import Winner from './winner.js';
 import '../index.css';
 
 export default class Game extends React.Component {
@@ -16,7 +14,7 @@ export default class Game extends React.Component {
       turn: 0,
       number: '',
       won: false,
-      hotOrCold: ''
+      hotOrCold: 'Make your Guess!'
     };
     
     this.handleShow = this.handleShow.bind(this);
@@ -46,7 +44,7 @@ export default class Game extends React.Component {
     let numGuess = Number.parseInt(this.state.guess, 10);
     let newGuessArray = [...this.state.guessArray];
     if (numGuess === this.state.number) {
-      this.setState({won: true});
+      this.setState({hotOrCold: 'You Won! Click New Game to play again!'});
     } else if (numGuess < 1 || numGuess > 100) {
       alert('Please choose a number between 1 and 100');
     } else {
@@ -110,7 +108,7 @@ export default class Game extends React.Component {
           <h1 className="title">HOT or COLD</h1>
         </header>
         <section className="game">
-          { this.state.won ? <Winner /> : <Start /> }
+          <h2 id="feedback">{this.state.hotOrCold}</h2>
           <Form 
             value={this.state.guess}
             onChange={this.handleChange}
