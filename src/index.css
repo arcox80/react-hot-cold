@@ -92,6 +92,10 @@ nav button {
   font-size: 1.1em;
 }
 
+nav button:hover {
+  cursor: pointer;
+}
+
 h1 {
   font-weight: 900;
   font-size: 3em;

@@ -13,7 +13,6 @@ export default class Game extends React.Component {
       guessArray: [],
       turn: 0,
       number: '',
-      won: false,
       hotOrCold: 'Make your Guess!'
     };
     
@@ -45,10 +44,10 @@ export default class Game extends React.Component {
     let newGuessArray = [...this.state.guessArray];
     if (numGuess === this.state.number) {
       this.setState({hotOrCold: 'You Won! Click New Game to play again!'});
-    } else if (numGuess < 1 || numGuess > 100) {
+    } else if (numGuess < 1 || numGuess > 100 || isNaN(numGuess) === true) {
       alert('Please choose a number between 1 and 100');
     } else {
-      for (let i = 0; newGuessArray.length; i++) {
+      for (let i = 0; i < newGuessArray.length; i++) {
         if (numGuess === newGuessArray[i]) {
           alert('You already guessed that number! Please choose another.');
         }
@@ -90,7 +89,7 @@ export default class Game extends React.Component {
         </div>
       </Modal>
     ) : null;
-    const guesses = (this.state.guessArray.length > 0) ? (<Guesses value={this.state.guessArray[(this.state.turn - 1)]} />) : null;
+
     return (
       <div>
         <header>
@@ -118,9 +117,7 @@ export default class Game extends React.Component {
           />
           <div>
             <p>Guess #<span id="count">{this.state.turn}</span>!</p>
-            <ul id="guessList" className="guessBox clearfix">
-              {guesses}
-            </ul>
+            <Guesses guessList={this.state.guessArray} />
           </div>
         </section>
       </div>
