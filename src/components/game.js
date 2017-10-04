@@ -65,7 +65,6 @@ export default class Game extends React.Component {
         guessArray: [...this.state.guessArray, numGuess],
         turn: this.state.turn + 1
       });
-      console.log(this.state);
     }
   }
 
